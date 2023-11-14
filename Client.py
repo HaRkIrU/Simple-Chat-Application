@@ -12,6 +12,7 @@ client.connect(('127.0.0.1', 55555))
 # Create a Tkinter window
 window = tk.Tk()
 window.title("Chat Application")
+window.resizable(0,0)
 
 # Frame to hold the chat area
 chat_frame = tk.Frame(window)

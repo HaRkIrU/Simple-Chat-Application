@@ -12,7 +12,7 @@ server.listen()
 
 # Lists For Clients and Their Nicknames
 clients = []
-nicknames = []
+usernames = []
 
 # Sending Messages To All Connected Clients
 def broadcast(message):
@@ -31,9 +31,9 @@ def handle(client):
             index = clients.index(client)
             clients.remove(client)
             client.close()
-            nickname = nicknames[index]
-            broadcast('{} left!'.format(nickname).encode('ascii'))
-            nicknames.remove(nickname)
+            username = usernames[index]
+            broadcast('{} left!'.format(username).encode('ascii'))
+            usernames.remove(username)
             break
 
 # Receiving / Listening Function
@@ -45,15 +45,14 @@ def receive():
 
         # Request And Store Nickname
         client.send('NICK'.encode('ascii'))
-        nickname = client.recv(1024).decode('ascii')
-        nicknames.append(nickname)
+        username = client.recv(1024).decode('ascii')
+        usernames.append(username)
         clients.append(client)
 
         # Print And Broadcast Nickname
-        print("Username is {}".format(nickname))
-        broadcast("{} has joined the server!".format(nickname).encode('ascii'))
-        client.send('Connected to server!, Welcome!'.encode('ascii'))
-        client.send('Connected to server!, Welcome!'.encode('ascii'))
+        print("Username is {}".format(username))
+        broadcast("{} has joined the server!".format(username).encode('ascii'))
+        client.send('Connected to server!, Welcome!\nType something in the text field below.\nSend the message by pressing the "send button!'.encode('ascii'))
 
         # Start Handling Thread For Client
         thread = threading.Thread(target=handle, args=(client,))
